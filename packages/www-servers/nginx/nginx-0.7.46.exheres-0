@@ -1,0 +1,78 @@
+# Copyright 2009 Timothy Redaelli
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'nginx-0.7.43.ebuild', which is:
+#     Copyright 1999-2009 Gentoo Foundation
+
+require common-metadata toolchain-funcs
+
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="http-addition debug fastcgi flv imap pcre perl random-index ssl status sub webdav zlib"
+
+DEPENDENCIES="
+    build+run:
+        user/${PN}
+        group/${PN}
+        pcre? ( dev-libs/pcre )
+        ssl? ( dev-libs/openssl )
+        zlib? ( sys-libs/zlib )
+        perl? ( dev-lang/perl )"
+
+tc-export CC
+DEFAULT_SRC_COMPILE_PARAMS=(LINK="${CC} ${LDFLAGS}" OTHERLDFLAGS="${LDFLAGS}")
+
+src_configure() {
+    local myconf
+
+    option http-addition && myconf="${myconf} --with-http_addition_module"
+    option fastcgi || myconf="${myconf} --without-http_fastcgi_module"
+    option fastcgi && myconf="${myconf} --with-http_realip_module"
+    option flv     && myconf="${myconf} --with-http_flv_module"
+    option zlib    || myconf="${myconf} --without-http_gzip_module"
+    option pcre    || {
+        myconf="${myconf} --without-pcre --without-http_rewrite_module"
+    }
+    option debug   && myconf="${myconf} --with-debug"
+    option ssl     && myconf="${myconf} --with-http_ssl_module"
+    option ssl     || myconf="${myconf} --without-http-cache"
+    option imap    && myconf="${myconf} --with-imap" # pop3/imap4 proxy support
+    option perl    && myconf="${myconf} --with-http_perl_module"
+    option status  && myconf="${myconf} --with-http_stub_status_module"
+    option webdav  && myconf="${myconf} --with-http_dav_module"
+    option sub     && myconf="${myconf} --with-http_sub_module"
+    option random-index    && myconf="${myconf} --with-http_random_index_module"
+
+    ./configure \
+        --prefix=/usr \
+        --conf-path=/etc/${PN}/${PN}.conf \
+        --http-log-path=/var/log/${PN}/access_log \
+        --error-log-path=/var/log/${PN}/error_log \
+        --pid-path=/var/run/${PN}.pid \
+        --http-client-body-temp-path=/var/tmp/${PN}/client \
+        --http-proxy-temp-path=/var/tmp/${PN}/proxy \
+        --http-fastcgi-temp-path=/var/tmp/${PN}/fastcgi \
+        --with-md5-asm --with-md5=/usr/include \
+        --with-sha1-asm --with-sha1=/usr/include \
+        ${myconf} || die "configure failed"
+}
+
+src_install() {
+    keepdir /var/log/${PN} /var/tmp/${PN}/{client,proxy,fastcgi}
+    
+    dosbin objs/nginx
+    newinitd "${FILES}"/nginx.initd nginx
+
+    insinto /etc/nginx
+    doins "${FILES}"/nginx.conf
+    doins conf/*
+    dodoc CHANGES{,.ru} README
+
+    option perl && einstall -C objs/src/http/modules/perl DESTDIR="${IMAGE}"
+}
+
+pkg_postinst() {
+    # FIXME porting install_cert
+    if option ssl; then
+        ewarn "You should generate your certificates and put it in /etc/ssl/${PN}/"
+    fi
+}
