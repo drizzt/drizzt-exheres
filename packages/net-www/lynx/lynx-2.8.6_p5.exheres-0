@@ -1,0 +1,35 @@
+# Copyright 2009 Timothy Redaelli
+# Distributed under the terms of the GNU General Public License v2
+
+require common-metadata
+
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="ipv6 nls ssl unicode"
+
+DEPENDENCIES="
+    build:
+        sys-devel/gettext
+    build+run:
+        app-arch/bzip2
+        sys-libs/zlib
+        sys-libs/ncurses[unicode?]
+        ssl? ( dev-libs/openssl )"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(--enable-cgi-links --enable-color-style --enable-file-upload
+--enable-included-msgs --enable-nsl-fork --enable-read-eta --enable-scrollbar --with-zlib)
+DEFAULT_SRC_CONFIGURE_ENABLES=(ipv6 nls)
+DEFAULT_SRC_CONFIGURE_WITHS=("bzip2 bzlib" ssl)
+
+DEFAULT_SRC_INSTALL_EXTRA_DOC=(COPYHEADER PROBLEMS)
+
+src_configure() {
+    option unicode && DEFAULT_SRC_CONFIGURE_PARAMS+=(--with-screen=ncursesw)
+    default
+}
+
+src_install() {
+    default
+    docinto docs
+    dodoc docs/*
+}

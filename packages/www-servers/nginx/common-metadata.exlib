@@ -6,11 +6,9 @@ Even if you don't expect to handle thousands of simultaneous requests, you can s
 HOMEPAGE="http://nginx.net"
 DOWNLOADS="http://sysoev.ru/nginx/${PNV}.tar.gz"
 LICENCES="BSD-2"
-MYOPTIONS=""
 
-DEPENDENCIES=""
+BUGS_TO="timothy@redaelli.eu"
 
-BUGS_TO="nginx@sysoev.ru"
 REMOTE_IDS="freshmeat:${PN}"
 
 UPSTREAM_CHANGELOG="http://nginx.net/CHANGES"

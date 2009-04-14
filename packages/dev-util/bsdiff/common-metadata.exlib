@@ -1,0 +1,7 @@
+SUMMARY="A binary diff and differential compression tools"
+DESCRIPTION="tools for building and applying patches to binary files. By using suffix sorting (specifically, Larsson and Sadakane's qsufsort) and taking advantage of how executable files change, bsdiff routinely produces binary patches 50-80% smaller than those produced by Xdelta, and 15% smaller than those produced by .RTPatch (a $2750/seat commercial patch tool)."
+HOMEPAGE="http://www.daemonology.net/bsdiff"
+DOWNLOADS="http://www.daemonology.net/bsdiff/${PNV}.tar.gz"
+LICENCES="BSD-2"
+
+BUGS_TO="timothy@redaelli.eu"

@@ -1,0 +1,25 @@
+# Copyright 2009 Timothy Redaelli
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'bsdiff-4.3-r1.ebuild', which is:
+#     Copyright 1999-2009 Gentoo Foundation
+
+require common-metadata flag-o-matic toolchain-funcs
+
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        app-arch/bzip2"
+
+src_compile() {
+    append-lfs-flags
+    $(tc-getCC) ${CFLAGS} ${LDFLAGS} -o bsdiff bsdiff.c -lbz2 || die "failed compiling bsdiff"
+    $(tc-getCC) ${CFLAGS} ${LDFLAGS} -o bspatch bspatch.c -lbz2 || die "failed compiling bspatch"
+}
+
+src_install() {
+    dobin bs{diff,patch} || die "cannot install bsdiff and/or bspatch"
+    doman bs{diff,patch}.1
+    }
