@@ -20,6 +20,6 @@ src_compile() {
 }
 
 src_install() {
-    dobin bs{diff,patch} || die "cannot install bsdiff and/or bspatch"
+    dobin bs{diff,patch}
     doman bs{diff,patch}.1
-    }
+}
