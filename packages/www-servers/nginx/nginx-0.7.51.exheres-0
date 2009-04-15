@@ -20,8 +20,6 @@ DEPENDENCIES="
         zlib? ( sys-libs/zlib )
         perl? ( dev-lang/perl )"
 
-DEFAULT_SRC_COMPILE_PARAMS=(CC="$(tc-getCC)" LD="\${CC}" OTHERLDFLAGS="${LDFLAGS}")
-
 option_with_no_inverse() {
     option "${1}" && option_with ${1#!} ${2}
 }
@@ -56,6 +54,10 @@ src_configure() {
         $(option_with_no_inverse debug) \
         $(option_with_no_inverse imap) \
         || die "configure failed"
+}
+
+src_compile() {
+    emake CC="$(tc-getCC)" LD="\${CC}" OTHERLDFLAGS="${LDFLAGS}"
 }
 
 src_install() {
