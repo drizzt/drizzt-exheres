@@ -23,13 +23,7 @@ DEPENDENCIES="
 DEFAULT_SRC_COMPILE_PARAMS=(CC="$(tc-getCC)" LD="\${CC}" OTHERLDFLAGS="${LDFLAGS}")
 
 option_with_no_inverse() {
-    if option "${1}"; then
-        if [[ "${1:0:1}" != '!' ]]; then
-            echo "--with-${2:-${1}}"
-        else
-            echo "--without-${2:-${1}}"
-        fi
-    fi
+    option "${1}" && option_with ${1#!} ${2}
 }
 
 option_with_http_modules() {
