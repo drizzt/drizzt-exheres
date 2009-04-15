@@ -1,0 +1,12 @@
+SUMMARY="a download tool for UNIX-like systems"
+DESCRIPTION="You may use it to download single files or to mirror entire servers.
+It is similar to GNU wget (and has a partly compatible command line), but has the ability to do many downloads in parallel." 
+HOMEPAGE="http://puf.sourceforge.net"
+DOWNLOADS="mirror://sourceforge/${PN}/${PNV}.tar.gz"
+LICENCES="GPL-2"
+
+BUGS_TO="timothy@redaelli.eu"
+
+REMOTE_IDS="freshmeat:${PN}"
+
+UPSTREAM_CHANGELOG="http://puf.sourceforge.net/ChangeLog"
