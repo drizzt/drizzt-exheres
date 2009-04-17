@@ -8,15 +8,17 @@ gzip (read and write, uses zlib)
 bzip2 (read and write, uses bzlib)
 compress (read and write, uses an internal implementation)
 separate command-line compressors (no auto-detect for these)
+xz and lzma (read and write using liblzma) 
 tar (read and write, including GNU extensions)
 pax (read and write, including GNU and star extensions)
+cpio (read and write, including odc and newc variants) 
 ISO9660 (read only, with some limitations)
 Zip (read only, with some limitations)
 mtree (read and write)
 shar (write only)
 ar (read and write, including BSD and GNU/SysV variants)
 "
-# XXX: cpio (read and write, including odc and newc variants)
+
 HOMEPAGE="http://code.google.com/p/${PN} http://people.freebsd.org/~kientzle/${PN}"
 DOWNLOADS="http://${PN}.googlecode.com/files/${PNV}.tar.gz"
 
@@ -30,13 +32,9 @@ DEPENDENCIES="
         app-arch/gzip
         app-arch/bzip2
         acl? ( sys-apps/acl )
-        xattr? ( sys-apps/attr )
         lzma? ( app-arch/xz )
+        xattr? ( sys-apps/attr )
 "
-
-DEFAULT_SRC_PREPARE_PATCHES=(
-    "${FILES}"/${PNV}-test_option_t.patch
-)
 
 DEFAULT_SRC_CONFIGURE_PARAMS=(
     --enable-shared
@@ -44,6 +42,5 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --with-{zlib,bz2lib}
     --without-lzmadec
 )
-DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( acl xattr )
-DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( lzma )
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( acl lzma xattr )
 
