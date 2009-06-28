@@ -4,7 +4,7 @@
 require common-metadata
 
 SLOT="0"
-PLATFORMS="~amd64"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS="bzip2 ipv6 nls ssl unicode"
 
 DEPENDENCIES="
