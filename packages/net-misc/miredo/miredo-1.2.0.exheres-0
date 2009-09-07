@@ -10,6 +10,8 @@ MYOPTIONS=""
 DEPENDENCIES="
     build+run:
         dev-libs/judy
+    run:
+        sys-apps/iproute2
     post:
         group/miredo
         user/miredo
