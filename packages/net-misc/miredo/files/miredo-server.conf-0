@@ -1,0 +1,2 @@
+# Options to pass to the miredo server process
+MIREDO_SERVER_OPTS=""
