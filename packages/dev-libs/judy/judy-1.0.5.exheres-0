@@ -1,0 +1,12 @@
+# Copyright 2009 Timothy Redaelli
+# Distributed under the terms of the GNU General Public License v2
+
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.10 ] ] common-metadata
+
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+
+DEFAULT_SRC_PREPARE_PATCHES=(-p0 "${FILES}"/${PNV}-parallel-make.patch)
