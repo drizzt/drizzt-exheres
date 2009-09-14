@@ -11,14 +11,15 @@ MYOPTIONS="addition debug fastcgi flv imap pcre perl random-index status sub web
 
 DEPENDENCIES="
     build+run:
-        user/${PN}
-        group/${PN}
         pcre? ( dev-libs/pcre )
         dev-libs/openssl [[
             description = [ newer nginx versions are very broken without it ]
         ]]
         zlib? ( sys-libs/zlib )
-        perl? ( dev-lang/perl )"
+        perl? ( dev-lang/perl )
+    post:
+        user/${PN}
+        group/${PN}"
 
 option_with_no_inverse() {
     option "${1}" && option_with ${1#!} ${2}
