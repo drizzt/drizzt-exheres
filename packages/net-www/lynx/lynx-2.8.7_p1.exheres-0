@@ -5,14 +5,12 @@ require common-metadata
 
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="bzip2 ipv6 nls ssl unicode"
+MYOPTIONS="ipv6 nls ssl unicode"
 
 DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
-        bzip2? ( app-arch/bzip2 )
-        sys-libs/zlib
         sys-libs/ncurses[unicode?]
         ssl? ( dev-libs/openssl )"
 
@@ -22,7 +20,7 @@ src_configure() {
     local mycnf="--enable-cgi-links --enable-color-style --enable-file-upload --with-zlib
         -enable-included-msgs --enable-nsl-fork --enable-read-eta --enable-scrollbar
         $(option_enable ipv6) $(option_enable nls)
-        $(option_with bzip2 bzlib) $(option_with ssl)"
+        --with-bzlib $(option_with ssl)"
 
     option unicode && mycnf+=" --with-screen=ncursesw"
     econf ${mycnf}
