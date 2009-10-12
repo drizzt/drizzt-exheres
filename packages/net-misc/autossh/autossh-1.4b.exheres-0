@@ -12,6 +12,10 @@ DEPENDENCIES="
         net-misc/openssh
 "
 
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --hates=docdir
+)
+
 src_install() {
     dobin ${PN}
     dodoc CHANGES README
