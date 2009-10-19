@@ -18,7 +18,7 @@ DEPENDENCIES="
 "
 
 src_configure() {
-    econf --enable-miredo-user --localstatedir=/var --docdir="/usr/share/doc/${P}"
+    econf --enable-miredo-user --localstatedir=/var
 }
 
 src_install() {
@@ -30,6 +30,6 @@ src_install() {
     newconfd "${FILES}"/isatapd.conf-0 isatapd
     emake DESTDIR="${IMAGE}" install
     dodoc README NEWS ChangeLog AUTHORS THANKS TODO
-    
+
     rmdir "${IMAGE}"/var/run "${IMAGE}"/var || die "cannot remove empty dirs"
 }
