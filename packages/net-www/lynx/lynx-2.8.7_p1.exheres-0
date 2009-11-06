@@ -5,29 +5,43 @@ require common-metadata
 
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="ipv6 nls ssl unicode"
+MYOPTIONS="ipv6 nls ssl"
 
 DEPENDENCIES="
     build:
         sys-devel/gettext
     build+run:
-        sys-libs/ncurses[unicode?]
-        ssl? ( dev-libs/openssl )"
+        sys-libs/ncurses[unicode(+)]
+        ssl? ( dev-libs/openssl )
+"
 
-DEFAULT_SRC_INSTALL_EXTRA_DOC=(COPYHEADER PROBLEMS)
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --enable-cgi-links
+    --enable-color-style
+    --enable-file-upload
+    --with-zlib
+    --enable-included-msgs
+    --enable-nsl-fork
+    --enable-read-eta
+    --enable-scrollbar
+    --with-bzlib
+    --with-screen=ncursesw
+    --hates=docdir
+)
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
+    ipv6
+    nls
+)
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=(
+    ssl
+)
 
-src_configure() {
-    local mycnf="--enable-cgi-links --enable-color-style --enable-file-upload --with-zlib
-        -enable-included-msgs --enable-nsl-fork --enable-read-eta --enable-scrollbar
-        $(option_enable ipv6) $(option_enable nls)
-        --with-bzlib $(option_with ssl)"
-
-    option unicode && mycnf+=" --with-screen=ncursesw"
-    econf ${mycnf}
-}
+DEFAULT_SRC_INSTALL_EXTRA_DOCS=(COPYHEADER PROBLEMS)
 
 src_install() {
     default
+
     docinto docs
     dodoc docs/*
 }
+
