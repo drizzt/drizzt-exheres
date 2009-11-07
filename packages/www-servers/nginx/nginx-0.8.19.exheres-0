@@ -7,8 +7,10 @@ require common-metadata
 
 SLOT="0"
 PLATFORMS="~amd64"
-MYOPTIONS="addition debug fastcgi flv imap pcre perl random-index status sub webdav zlib"
-
+MYOPTIONS="addition debug fastcgi flv imap pcre perl random-index sub zlib
+    status [[ description = [ Enables stub_status module ] ]]
+    webdav [[ description = [ Enables webdav support ] ]]
+"
 DEPENDENCIES="
     build+run:
         pcre? ( dev-libs/pcre )
