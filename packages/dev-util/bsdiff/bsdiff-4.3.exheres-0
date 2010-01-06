@@ -3,7 +3,7 @@
 # Based in part upon 'bsdiff-4.3-r1.ebuild', which is:
 #     Copyright 1999-2009 Gentoo Foundation
 
-require common-metadata flag-o-matic toolchain-funcs
+require common-metadata flag-o-matic
 
 SLOT="0"
 PLATFORMS="~amd64"
@@ -15,8 +15,8 @@ DEPENDENCIES="
 
 src_compile() {
     append-lfs-flags
-    $(tc-getCC) ${CFLAGS} ${LDFLAGS} -o bsdiff bsdiff.c -lbz2 || die "failed compiling bsdiff"
-    $(tc-getCC) ${CFLAGS} ${LDFLAGS} -o bspatch bspatch.c -lbz2 || die "failed compiling bspatch"
+    "${CC}" ${CFLAGS} ${LDFLAGS} -o bsdiff bsdiff.c -lbz2 || die "failed compiling bsdiff"
+    "${CC}" ${CFLAGS} ${LDFLAGS} -o bspatch bspatch.c -lbz2 || die "failed compiling bspatch"
 }
 
 src_install() {

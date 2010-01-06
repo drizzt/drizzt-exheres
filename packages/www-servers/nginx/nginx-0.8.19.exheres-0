@@ -3,7 +3,7 @@
 # Based in part upon 'nginx-0.7.43.ebuild', which is:
 #     Copyright 1999-2009 Gentoo Foundation
 
-require common-metadata toolchain-funcs
+require common-metadata
 
 SLOT="0"
 PLATFORMS="~amd64"
@@ -58,7 +58,7 @@ src_configure() {
 }
 
 src_compile() {
-    emake CC="$(tc-getCC)" LD="\${CC}" OTHERLDFLAGS="${LDFLAGS}"
+    emake CC="${CC}" LD="\${CC}" OTHERLDFLAGS="${LDFLAGS}"
 }
 
 src_install() {
