@@ -1,0 +1,58 @@
+# Copyright 2010 Timothy Redaelli
+# Distributed under the terms of the GNU General Public License v2
+
+SUMMARY="A P2P-VoiceIP client."
+DESCRIPTION="Skype is the next phenomenon from the people who 
+brought you KaZaA. Just like KaZaA, Skype uses P2P (peer-to-peer) 
+technology to connect you to other users  not to share files this 
+time, but to talk and chat with your friends."
+HOMEPAGE="http://www.skype.com"
+DOWNLOADS="http://download.skype.com/linux/${PNV}.tar.bz2"
+
+LICENCES="skype"
+# skype binary check its checksum
+RESTRICT="strip"
+
+MYOPTIONS=""
+
+DEPENDENCIES="
+    run:
+        x11-libs/qt:4[dbus][X]
+"
+
+BUGS_TO="timothy@redaelli.eu"
+
+REMOTE_IDS="freshmeat:${PN}"
+
+src_install() {
+    exeinto /opt/${PN}
+    doexe skype
+
+    dodir /usr/bin
+    cat > "${IMAGE}"/usr/bin/skype <<'EOF'
+#!/bin/sh
+/opt/skype/skype --resources=/opt/skype "$@"
+EOF
+
+    fowners root:audio /opt/skype/skype /usr/bin/skype
+    fperms 0755 /usr/bin/skype
+
+    insinto /opt/${PN}/sounds
+    doins sounds/*.wav
+
+    insinto /opt/${PN}/lang
+    doins lang/*.qm
+
+    insinto /opt/${PN}/avatars
+    doins avatars/*.png
+
+    for x in 16 32 48; do
+        insinto /usr/share/icons/hicolor/${x}x${x}/apps
+        newins "${WORK}"/icons/SkypeBlue_${x}x${x}.png ${PN}.png
+    done
+
+    insinto /usr/share/applications
+    doins skype.desktop
+    
+    dodoc README
+}
