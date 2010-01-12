@@ -1,0 +1,8 @@
+# Copyright 2010 Timothy Redaelli                                                                 
+# Distributed under the terms of the GNU General Public License v2 
+
+require projgen
+
+PLATFORMS="~x86"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-use-DESTDIR.patch )

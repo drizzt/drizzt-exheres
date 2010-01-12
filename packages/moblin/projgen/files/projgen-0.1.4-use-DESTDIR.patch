@@ -1,0 +1,17 @@
+Source: timothy@redaelli.eu
+Upstream: no
+Reason: Use always DESTDIR when copy things
+
+--- projgen/libprojgen/Makefile.am.orig	2010-01-12 18:28:01.368842704 +0000
++++ projgen/libprojgen/Makefile.am	2010-01-12 18:29:03.272731098 +0000
+@@ -21,8 +21,8 @@
+ libprojgen_la_LDFLAGS= -version-info 0:1:0 -no-undefined
+ 
+ install-data-hook:
+-	$(MKDIR_P) ${pkgdatadir}
+-	cp -R templates/* ${pkgdatadir}
++	$(MKDIR_P) "$(DESTDIR)${pkgdatadir}"
++	cp -R templates/* "$(DESTDIR)${pkgdatadir}"
+ 
+ CLEANFILES = *~ projgen.pc
+ 

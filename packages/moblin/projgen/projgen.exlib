@@ -1,0 +1,40 @@
+# Copyright 2010 Timothy Redaelli                                                                 
+# Distributed under the terms of the GNU General Public License v2                                
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 1.10 ] ]                 
+
+SUMMARY="Linux Project Generator for Moblin"
+DESCRIPTION="Linux Project Generator is a tool that can be used
+to quickly generate an autogen-based,                          
+Moblin compliant template project in C, C++, or Python.        
+It has a growing set of sample code that can be selected and included."
+
+HOMEPAGE="http://moblin.org/projects/linux-project-generator"
+DOWNLOADS="http://moblin.org/sites/all/files/${PNV}.tgz"     
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""       
+SLOT="0"           
+
+DEPENDENCIES="
+    build:    
+        dev-util/pkg-config
+    build+run:             
+        sys-apps/file  [[ description = [ For libmagic ] ]]
+        gnome-platform/libglade:2                          
+        dev-libs/glib:2                                    
+        gnome-platform/GConf:2                             
+        dev-libs/libxml2:2.0
+        dev-doc/gtk-doc[>=1.9]"
+
+WORK="${WORKBASE}"/${PN}
+
+BUGS_TO="timothy@redaelli.eu"
+
+UPSTREAM_CHANGELOG="http://git.moblin.org/cgit.cgi/projgen/"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( --enable-gtk-doc )
+
+src_prepare() {
+    edo gtkdocize --copy
+    autotools_src_prepare
+}
