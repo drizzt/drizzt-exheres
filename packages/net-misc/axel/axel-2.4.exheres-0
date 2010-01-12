@@ -1,0 +1,41 @@
+# Copyright 2010 Timothy Redaelli
+# Distributed under the terms of the GNU General Public License v2
+
+SUMMARY="Accelerated light UNIX download tool"
+DESCRIPTION="Axel tries to accelerate HTTP/FTP downloading process
+by using multiple connections for one file.
+It can use multiple mirrors for a download.
+Axel has no dependencies and is lightweight,
+so it might be useful as a wget clone on byte-critical systems."
+
+HOMEPAGE="http://axel.alioth.debian.org/"
+DOWNLOADS="http://alioth.debian.org/frs/download.php/3015/${PNV}.tar.gz"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~x86"
+MYOPTIONS="debug"
+
+DEPENDENCIES="
+    run:
+        sys-devel/gettext"
+
+src_prepare() {
+    # Set LDFLAGS and fix expr (from my gentoo ebuild)
+    sed -i -e 's/expr/& --/' -e "s/^LFLAGS=$/&${LDFLAGS}/" configure || die "cannot set LDFLAGS and fix expr"
+}
+
+src_configure() {
+    edo ./configure \
+        --strip=0 \
+        --prefix=/usr \
+        --etcdir=/etc \
+        --i18n=1 \
+        $(option debug && echo --debug=1) \
+        || die "./configure has failed"
+}
+
+src_install() {
+    default
+    dodoc API CHANGES CREDITS README axelrc.example
+}
