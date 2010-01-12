@@ -1,0 +1,41 @@
+
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 1.10 ] ]
+
+SUMMARY="a tool used to generate packages from your autogen-based project (on Moblin)"
+DESCRIPTION="Moblin Package Creator is a tool that can be used to quickly generate RPM
+and DEB packages from your autogen-based project.
+
+Moblin Package Creator is written in C and comprises a library (libmpc)
+and application (moblin-package-creator).
+The library exposes a C interface to allow the functionality to be used in other projects.
+The application has support for a console version and GUI:"
+
+DOWNLOADS=""
+HOMEPAGE="http://moblin.org/projects/moblin-package-creator"
+
+LICENCES="LGPL-2.1"
+MYOPTIONS=""
+PLATFORMS="~x86"
+SLOT="0"
+
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+    build+run:
+        x11-libs/gtk+:2
+        gnome-platform/libglade:2
+        dev-doc/gtk-doc"
+
+BUGS_TO="timothy@redaelli.eu"
+
+SCM_REPOSITORY="git://git.moblin.org/moblin-package-creator.git"
+require scm-git
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( --enable-gtk-doc )
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-we-only-have-cpp-files.patch )
+DEFAULT_SRC_COMPILE_PARAMS=( -j1 )
+
+src_prepare() {
+    edo gtkdocize --copy
+    autotools_src_prepare
+}

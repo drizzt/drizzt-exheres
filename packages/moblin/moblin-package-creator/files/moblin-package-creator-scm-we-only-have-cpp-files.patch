@@ -1,0 +1,15 @@
+Source: timothy@redaelli.eu
+Upstream: no
+Reason: We have no .c files, only .cpp
+
+--- a/doc/reference/Makefile.am
++++ b/doc/reference/Makefile.am
+@@ -21,7 +21,7 @@ SCAN_OPTIONS=
+ # e.g. HFILE_GLOB=$(top_srcdir)/gtk/*.h
+ # e.g. CFILE_GLOB=$(top_srcdir)/gtk/*.c
+ # HFILE_GLOB=../../src/*.h
+-CFILE_GLOB=../../src/*.c
++CFILE_GLOB=../../src/*.cpp
+ 
+ # Header files to ignore when scanning.
+ # e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h
