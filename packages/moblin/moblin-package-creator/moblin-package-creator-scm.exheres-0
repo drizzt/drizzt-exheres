@@ -14,7 +14,7 @@ DOWNLOADS=""
 HOMEPAGE="http://moblin.org/projects/moblin-package-creator"
 
 LICENCES="LGPL-2.1"
-MYOPTIONS=""
+MYOPTIONS="doc"
 PLATFORMS="~x86"
 SLOT="0"
 
@@ -31,11 +31,15 @@ BUGS_TO="timothy@redaelli.eu"
 SCM_REPOSITORY="git://git.moblin.org/moblin-package-creator.git"
 require scm-git
 
-DEFAULT_SRC_CONFIGURE_PARAMS=( --enable-gtk-doc )
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( 'doc gtk-doc' )
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-we-only-have-cpp-files.patch )
-DEFAULT_SRC_COMPILE_PARAMS=( -j1 )
 
 src_prepare() {
     edo gtkdocize --copy
     autotools_src_prepare
+}
+
+src_compile() {
+    option doc && emake -j1 -C doc
+    emake
 }
