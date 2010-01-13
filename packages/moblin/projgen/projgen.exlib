@@ -19,7 +19,7 @@ DEPENDENCIES="
     build:    
         dev-util/pkg-config
     build+run:             
-        sys-apps/file  [[ description = [ For libmagic ] ]]
+        sys-apps/file  [[ note = [ For libmagic ] ]]
         gnome-platform/libglade:2                          
         dev-libs/glib:2                                    
         gnome-platform/GConf:2                             
