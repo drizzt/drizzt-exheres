@@ -1,0 +1,20 @@
+Source: timothy@redaelli.eu
+Upstream: no
+Reason: Paludis presets the locale to C that is not an unicode locale.
+
+--- yum-3.2.25/test/check-po-yes-no.py.orig	2008-08-25 19:22:47.000000000 +0000
++++ yum-3.2.25/test/check-po-yes-no.py	2010-01-13 16:49:59.157635629 +0000
+@@ -102,11 +102,11 @@
+ yes        %5s: %s
+ y          %5s: %s
+ """ % (fname,
+-       yes, syes, y, sy)
++       to_utf8(yes), to_utf8(syes), to_utf8(y), to_utf8(sy))
+     if sno[0] != sn:
+         print >>sys.stderr, """\
+ ERROR: no/n translations don't match in: %s
+ no         %5s: %s
+ n          %5s: %s
+ """ % (fname,
+-       no, sno, n, sn)
++       to_utf8(no), to_utf8(sno), to_utf8(n), to_utf8(sn))
