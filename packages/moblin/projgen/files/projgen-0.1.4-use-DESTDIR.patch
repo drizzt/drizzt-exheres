@@ -1,5 +1,5 @@
 Source: timothy@redaelli.eu
-Upstream: no
+Upstream: yes - http://bugzilla.moblin.org/show_bug.cgi?id=9047
 Reason: Use always DESTDIR when copy things
 
 --- projgen/libprojgen/Makefile.am.orig	2010-01-12 18:28:01.368842704 +0000
