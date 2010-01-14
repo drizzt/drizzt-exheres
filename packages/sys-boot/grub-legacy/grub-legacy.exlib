@@ -1,0 +1,33 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+
+require flag-o-matic
+
+SUMMARY="GNU GRUB boot loader (legacy version)"
+DESCRIPTION="
+"
+HOMEPAGE="http://www.gnu.org/software/grub/grub-legacy.en.html"
+MY_PN=grub
+DOWNLOADS="ftp://alpha.gnu.org/gnu/${MY_PN}/${MY_PN}-${PV}.tar.gz"
+
+LICENCES="GPL-2"
+MYOPTIONS=""
+SLOT="0"
+
+DEPENDENCIES="sys-libs/ncurses"
+
+BUGS_TO="timothy@redaelli.eu"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( --disable-auto-linux-mem-opt --hates=docdir )
+
+WORK="${WORKBASE}/${MY_PN}-${PV}"
+
+src_prepare() {
+    append-flags -Os   # stage1_5 would be too big without -Os
+    default
+}
+
+src_install() {
+    default
+    edo mv "${IMAGE}"/usr/sbin/{grub,${PN}}-install # It collides with sys-boot/grub
+}
