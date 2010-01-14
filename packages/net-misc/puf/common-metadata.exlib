@@ -1,3 +1,6 @@
+# Copyright 2009 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+
 SUMMARY="a download tool for UNIX-like systems"
 DESCRIPTION="You may use it to download single files or to mirror entire servers.
 It is similar to GNU wget (and has a partly compatible command line), but has the ability to do many downloads in parallel." 

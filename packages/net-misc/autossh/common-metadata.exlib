@@ -1,3 +1,6 @@
+# Copyright 2009 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+
 SUMMARY="automatically restart SSH sessions and tunnels"
 DESCRIPTION="a program to start a copy of ssh and monitor it,
 restarting it as necessary should it die or stop passing traffic."

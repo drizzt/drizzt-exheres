@@ -1,5 +1,5 @@
 #!/sbin/runscript
-# Copyright 2009 Timothy Redaelli
+# Copyright 2009 Timothy Redaelli <timothy@redaelli.eu>
 # Based in part upon 'nginx' from Gentoo, which is:
 #     Copyright 1999-2004 Gentoo Foundation
 # vim: set sw=4 sts=4 et:

@@ -1,3 +1,6 @@
+# Copyright 2009 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+
 SUMMARY="A binary diff and differential compression tools"
 DESCRIPTION="tools for building and applying patches to binary files.
 By using suffix sorting (specifically, Larsson and Sadakane's qsufsort)

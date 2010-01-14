@@ -1,3 +1,6 @@
+# Copyright 2009 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+
 SUMMARY="a console-based web browser with (optional) ssl support"
 DESCRIPTION="free, open-source, text-only Web browser for use on terminals.
 Supported protocols are Gopher, HTTP, HTTPS, FTP, WAIS, and NNTP."

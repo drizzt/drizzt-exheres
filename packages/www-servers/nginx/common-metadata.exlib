@@ -1,3 +1,6 @@
+# Copyright 2009 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+
 SUMMARY="A small and fast HTTP server and mail proxy server"
 DESCRIPTION="A free, open-source, high-performance HTTP server and reverse proxy, as well as an IMAP/POP3 proxy server.
 It's known for its high performance, stability, rich feature set, simple configuration, and low resource consumption.

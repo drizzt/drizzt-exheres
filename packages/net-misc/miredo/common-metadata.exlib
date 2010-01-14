@@ -1,3 +1,6 @@
+# Copyright 2009 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+
 SUMMARY="Teredo IPv6 tunneling"
 DESCRIPTION="Miredo is an open-source implementation of the Teredo: 
 Tunneling IPv6 over UDP through NATs Internet proposed standard (RFC 4380), 
