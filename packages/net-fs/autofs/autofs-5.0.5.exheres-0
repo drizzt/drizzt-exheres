@@ -1,0 +1,73 @@
+# Copyright 2010 Timothy Redaelli
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'autofs-5.0.4-r5.ebuild' from Gentoo, which is:
+#     Copyright 1999-2009 Gentoo Foundation
+
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 1.10 ] ]
+
+SUMMARY="Kernel based automounter"
+
+HOMEPAGE="http://www.linux-consulting.com/Amd_AutoFS/autofs.html"
+DOWNLOADS_BASE="mirror://kernel/linux/daemons/${PN}/v$(ever major)"
+
+PATCHES_LIST=(
+    ${PNV}-fix-included-map-read-fail-handling.patch
+    ${PNV}-refactor-ldap-sasl-bind.patch
+    ${PN}-5.0.4-add-mount-wait-parameter.patch
+    ${PNV}-special-case-cifs-escapes.patch
+    ${PNV}-fix-libxml2-workaround-configure.patch
+    ${PNV}-more-code-analysis-corrections.patch
+    ${PNV}-fix-backwards-ifndef-INET6.patch
+    ${PNV}-fix-stale-init-for-file-map-instance.patch
+    ${PNV}-fix-ext4-fsck-at-mount.patch
+    ${PNV}-dont-use-master_lex_destroy-to-clear-parse-buffer.patch
+    ${PNV}-make-documentation-for-set-log-priority-clearer.patch
+    ${PNV}-fix-timeout-in-connect_nb.patch
+    ${PNV}-fix-pidof-init-script-usage.patch
+    ${PNV}-check-for-path-mount-location-in-generic-module.patch
+    ${PNV}-dont-fail-mount-on-access-fail.patch
+    ${PNV}-fix-rpc-large-export-list.patch
+    ${PNV}-fix-memory-leak-on-reload.patch
+)
+
+DOWNLOADS="${DOWNLOADS_BASE}/${PNV}.tar.bz2"
+
+for i in "${PATCHES_LIST[@]}"; do
+    DOWNLOADS="${DOWNLOADS} ${DOWNLOADS_BASE}/${i}"
+done
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        net-misc/wget"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( 
+    --enable-ignore-busy
+    --without-openldap
+    --without-sasl
+)
+
+DEFAULT_SRC_COMPILE_PARAMS=( DONTSTRIP=1 )
+
+src_prepare() {
+    for i in "${PATCHES_LIST[@]}"; do
+        expatch -p1 "${FETCHEDDIR}/${i}"
+    done
+
+    edo sed -i '/^\(CC\|CXX\)/d' Makefile.rules
+
+    # rpcgen by default checks only in /lib and /usr/ccs/lib/cpp
+    edo sed -i 's:^RPCGEN = .*$:& -Y /usr/bin:' Makefile.conf.in
+
+    eautoreconf
+}
+
+src_install() {
+    default
+    newinit.d "${FILES}"/autofs$(ever major).initd
+    keepdir /var/run/autofs
+}
