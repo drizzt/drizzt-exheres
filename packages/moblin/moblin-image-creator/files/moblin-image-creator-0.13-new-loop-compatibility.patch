@@ -1,0 +1,17 @@
+Source: timothy@redaelli.eu
+Upstream: no
+Reason: A loop device can also be /dev/loop/0 instead of /dev/loop0
+
+diff --git a/mic/appcreate/partitionedfs.py b/mic/appcreate/partitionedfs.py
+index fb47de3..60b5eef 100644
+--- a/mic/appcreate/partitionedfs.py
++++ b/mic/appcreate/partitionedfs.py
+@@ -154,7 +154,7 @@ class PartitionedMount(Mount):
+ 
+             # Strip trailing blank and mask verbose output
+             i = 0
+-            while i < len(kpartxOutput) and kpartxOutput[i][0:4] != "loop":
++            while i < len(kpartxOutput) and kpartxOutput[i][0:4] != "loop" and kpartxOutput[i][0].isdigit() != True :
+                i = i + 1
+             kpartxOutput = kpartxOutput[i:]
+ 

@@ -1,4 +1,5 @@
-#require distutils
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2 
 
 SUMMARY="Tool for generating moblin images"
 
@@ -36,7 +37,7 @@ DEPENDENCIES="
 DEFAULT_SRC_INSTALL_EXCLUDE=( "release.sh" )
 
 src_prepare() {
-    default
+    expatch "${FILES}"/${PNV}-new-loop-compatibility.patch
     fgrep -lrZ '/bin/dd' "${WORK}" | xargs -0 sed -i 's:/bin/dd:/usr/bin/dd:g'
 }
 
