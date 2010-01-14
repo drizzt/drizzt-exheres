@@ -1,0 +1,46 @@
+#require distutils
+
+SUMMARY="Tool for generating moblin images"
+
+HOMEPAGE="http://moblin.org/projects/moblin-image-creator-2"
+DOWNLOADS=""
+
+SCM_REPOSITORY="git://git.moblin.org/moblin-image-creator-2"
+SCM_TAG=${PV}
+
+require scm-git
+
+LICENCES="GPL-2"
+SLOT="2"
+PLATFORMS="~x86"
+MYOPTIONS=""
+
+# Taken from debian/rules
+DEPENDENCIES="
+    build+run:
+        sys-libs/zlib
+    run:
+        sys-fs/dosfstools
+        app-cdr/cdrkit [[ note = [ For genisoimage ] ]]
+        sys-fs/e2fsprogs
+        sys-apps/yum
+        net-misc/curl
+        net-misc/rsync
+        sys-fs/multipath-tools  [[ note = [ For kpartx ] ]]
+        sys-fs/parted
+        sys-fs/lvm2 [[ note = [ For dmsetup ] ]]
+        dev-python/urlgrabber
+        base/syslinux
+        sys-boot/grub-legacy [[ note = [ For /usr/sbin/grub ] ]]"
+
+DEFAULT_SRC_INSTALL_EXCLUDE=( "release.sh" )
+
+src_prepare() {
+    default
+    fgrep -lrZ '/bin/dd' "${WORK}" | xargs -0 sed -i 's:/bin/dd:/usr/bin/dd:g'
+}
+
+src_install() {
+    default
+    dodoc -r examples
+}
