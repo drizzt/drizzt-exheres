@@ -1,0 +1,48 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>                     
+# Distributed under the terms of the GNU General Public License v2
+
+require python flag-o-matic
+
+SUMMARY="ISO9660 checksum utilities"
+DESCRIPTION="isomd5sum is a collection of utilities for implanting
+and checking MD5 checksums within an ISO9660 image.
+A checksum is implanted in an image using the implantisomd5 utility,
+and the corresponding checkisomd5 utility can be used to verify burned
+CDs are error-free. Also included is a Python extension for performing these tasks."
+
+HOMEPAGE="http://www.finnie.org/software/isomd5sum/"
+DOWNLOADS="https://fedorahosted.org/releases/i/s/${PN}/${PNV}.tar.bz2"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~x86"
+MYOPTIONS="python"
+
+DEPENDENCIES="
+    build+run:
+        dev-libs/popt
+        python? ( dev-lang/python )
+"
+
+src_compile() {
+    append-lfs-flags
+    emake -j1 CFLAGS="$CPPFLAGS $CFLAGS" implantisomd5 checkisomd5
+    if option python; then
+        append-cppflags "-I/usr/include/python$(python_get_abi)"
+        emake -j1 CFLAGS="$CPPFLAGS $CFLAGS" pyisomd5sum.so
+    fi
+}
+
+src_install() {
+    dobin implantisomd5 checkisomd5
+    doman implantisomd5.1 checkisomd5.1
+    dolib.a libimplantisomd5.a libcheckisomd5.a
+    insinto /usr/include
+    doins libimplantisomd5.h libcheckisomd5.h
+    if option python; then
+        insinto $(python_get_sitedir)
+        insopts -m755
+        doins pyisomd5sum.so
+    fi
+    dodoc README
+}
