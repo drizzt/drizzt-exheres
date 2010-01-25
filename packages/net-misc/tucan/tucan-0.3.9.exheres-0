@@ -1,0 +1,35 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>               
+# Distributed under the terms of the GNU General Public License v2 
+
+SUMMARY="Software designed for downloads and uploads at hosting sites like rapidshare or megaupload"
+
+HOMEPAGE="http://tucaneando.com/"
+DOWNLOADS="http://build-tucan-doc.googlecode.com/files/${PNV}.tar.gz http://forja.rediris.es/frs/download.php/1470/${PNV}.tar.gz"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~x86"
+MYOPTIONS="gtk"
+
+DEPENDENCIES="
+    run:
+        app-text/tesseract[linguas:en]
+        dev-python/Imaging
+        gtk? (
+            gnome-bindings/pygtk
+            gnome-desktop/librsvg
+        )"
+
+src_compile() {
+    :
+}
+
+src_install() {
+    emake DESTDIR="${IMAGE}/usr" install
+    # Broken symlink
+    rm "${IMAGE}"/usr/bin/tucan
+    ln -s /usr/share/tucan/tucan.py "${IMAGE}"/usr/bin/tucan
+    dodoc CHANGELOG README
+
+    option gtk || rm "${IMAGE}"/usr/share/applications/tucan.desktop
+}

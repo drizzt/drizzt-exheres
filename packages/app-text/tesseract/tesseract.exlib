@@ -1,0 +1,55 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>               
+# Distributed under the terms of the GNU General Public License v2 
+
+myexparam lang_files[]
+
+exparam -v LANG_FILES lang_files[@]
+
+SUMMARY="A commercial quality OCR engine developed at HP in the 80's and early 90's."
+DESCRIPTION="The Tesseract OCR engine was one of the top 3 engines in the 1995 UNLV Accuracy test.
+Between 1995 and 2006 it had little work done on it, but it is probably one of the most accurate
+open source OCR engines available.
+The source code will read a binary, grey or color image and output text."
+
+HOMEPAGE="http://code.google.com/p/tesseract-ocr/"
+
+set_languages_downloads() {
+    local base_url="http://tesseract-ocr.googlecode.com/files"
+    for x in "${LANG_FILES[@]}"; do
+        echo -n "linguas:${x% *}? ( ${base_url}/${x#* }.tar.gz ) "
+    done
+}
+
+set_languages_options() {
+    for x in "${LANG_FILES[@]}"; do
+        echo -n "${x% *} "
+    done
+}
+
+DOWNLOADS="http://tesseract-ocr.googlecode.com/files/${PNV}.tar.gz
+    $(set_languages_downloads)"
+
+LICENCES="Apache-2.0"
+MYOPTIONS="
+    tiff
+    linguas: ( $(set_languages_options) ) [[ number-selected = at-least-one ]]
+"
+
+DEPENDENCIES="
+    build+run:
+        tiff? ( media-libs/tiff )
+"
+
+SLOT="0"
+
+BUGS_TO="timothy@redaelli.eu"
+
+REMOTE_IDS=""
+
+UPSTREAM_DOCUMENTATION="http://code.google.com/p/tesseract-ocr/w/list"
+UPSTREAM_RELEASE_NOTES="http://code.google.com/p/tesseract-ocr/wiki/ReleaseNotes"
+
+src_unpack() {
+    default
+    mv "${WORKBASE}"/tessdata/* "${WORK}"/tessdata/
+}

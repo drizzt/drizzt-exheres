@@ -1,0 +1,17 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>               
+# Distributed under the terms of the GNU General Public License v2 
+
+require tesseract [ lang_files=[ \
+    "de ${PN}-2.00.deu" \
+    "de_FR ${PN}-2.01.deu-f" \
+    "en ${PN}-2.00.eng" \
+    "fr ${PN}-2.00.fra" \
+    "it ${PN}-2.00.ita" \
+    "nl ${PN}-2.00.nld" \
+    "es ${PN}-2.00.spa" \
+    "pt ${PN}-2.01.por" \
+    "vi ${PN}-2.01.vie" ] ]
+
+PLATFORMS="~x86"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-gcc44.patch )
