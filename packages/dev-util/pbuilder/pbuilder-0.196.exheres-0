@@ -1,0 +1,22 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+
+require debian-upstream
+
+SUMMARY="a personal package builder for Debian packages"
+
+HOMEPAGE="http://packages.qa.debian.org/p/pbuilder.html"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="sys-apps/debianutils
+    dev-util/debootstrap
+    app-arch/dpkg"
+
+src_install() {
+    default
+    edo find "${IMAGE}" -type d -empty -delete
+}
