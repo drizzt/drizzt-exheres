@@ -68,6 +68,7 @@ src_prepare() {
 
 src_install() {
     default
-    newinit.d "${FILES}"/autofs$(ever major).initd
+    newinitd "${FILES}"/autofs$(ever major).initd autofs
     keepdir /var/run/autofs
 }
+
