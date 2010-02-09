@@ -1,0 +1,13 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+
+SCM_REPOSITORY="git://tinc-vpn.org/tinc"
+
+require tinc scm-git autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.10 1.11 ] ]
+
+PLATFORMS="~x86"
+DOWNLOADS=""
+
+src_prepare() {
+    AT_M4DIR=m4 autotools_src_prepare
+}

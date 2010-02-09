@@ -1,0 +1,23 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>    
+# Distributed under the terms of the GNU General Public License v2
+
+SUMMARY="an easy to configure VPN implementation"
+
+HOMEPAGE="http://www.tinc-vpn.org/"
+DOWNLOADS="http://www.tinc-vpn.org/packages/${PNV}.tar.gz"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="app-arch/lzo:2
+              dev-libs/openssl
+              sys-libs/zlib"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( --enable-jumbograms )
+
+src_install() {
+    default
+    doinitd "${FILES}"/tincd
+    doconfd "${FILES}"/tinc.networks
+}
