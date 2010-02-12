@@ -1,0 +1,17 @@
+Source: myself
+Upstream: not applicable
+Reason: We don't want hardcoded CC/CFLAGS/LDFLAGS
+
+--- genromfs-0.5.2.orig/Makefile
++++ genromfs-0.5.2/Makefile
+@@ -5,9 +5,8 @@
+ PACKAGE = genromfs
+ VERSION = 0.5.2
+-CC = gcc
+-CFLAGS = -O2 -Wall -DVERSION=\"$(VERSION)\"#-g#
+-LDFLAGS = -s#-g
++CFLAGS ?= -O2
++CFLAGS += -Wall -DVERSION=\"$(VERSION)\"
+ 
+ DISTDIR = $(PACKAGE)-$(VERSION)
+ 
