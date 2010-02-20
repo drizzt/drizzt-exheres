@@ -34,8 +34,8 @@ src_install() {
 /opt/skype/skype --resources=/opt/skype "$@"
 EOF
 
-    fowners root:audio /opt/skype/skype /usr/bin/skype
-    fperms 0755 /usr/bin/skype
+    edo chown root:audio "${IMAGE}"/opt/skype/skype "${IMAGE}"/usr/bin/skype
+    edo chmod 0755 "${IMAGE}"/usr/bin/skype
 
     insinto /opt/${PN}/sounds
     doins sounds/*.wav
@@ -53,6 +53,6 @@ EOF
 
     insinto /usr/share/applications
     doins skype.desktop
-    
+
     dodoc README
 }
