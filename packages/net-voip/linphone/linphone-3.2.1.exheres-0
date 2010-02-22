@@ -1,0 +1,73 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+# Based in part upon 'linphone-3.2.1.ebuild', which is:
+#     Copyright 1999-2010 Gentoo Foundation
+
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.10 ] ] multilib
+
+SUMMARY="Video softphone based on the SIP protocol"
+
+HOMEPAGE="http://www.linphone.org/"
+DOWNLOADS="http://download.savannah.nongnu.org/releases/${PN}/stable/sources/${PNV}.tar.gz"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~x86"
+MYOPTIONS="doc gtk ipv6 ncurses video"
+
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+        doc? ( app-text/sgmltools-lite )
+        dev-util/intltool
+        sys-devel/gettext
+    build+run:
+        media-libs/mediastreamer[video?]
+        net-libs/libeXosip
+        net-libs/libosip
+        net-libs/ortp
+        gtk? ( gnome-platform/libglade )
+        ncurses? ( sys-libs/readline
+                   sys-libs/ncurses )
+        "
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --disable-strict
+    --enable-external-ortp
+    --enable-external-mediastreamer
+    --enable-nls
+    --disable-truespeech
+)
+
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
+    "doc manual"
+    "gtk gtk_ui"
+    ipv6
+    "ncurses console_ui"
+    video
+)
+
+src_prepare() {
+    expatch -p0 "${FILES}"/${PNV}-external-mediastreamer.patch
+
+    # remove speex check, avoid bug when mediastreamer[-speex]
+    edo sed -i -e '/SPEEX/d' configure.in
+
+    # fix path to use lib64
+    edo sed -i -e "s:lib\(/liblinphone\):$(get_libdir)\1:" configure.in
+
+    # removing bundled libs dir prevent them to be reconf
+    edo rm -rf mediastreamer2 oRTP
+    # and references in Makefile.am
+    edo sed -i -e "s:oRTP::" -e "s:mediastreamer2::" Makefile.am
+
+    # make sure to use host libtool version
+    rm -f m4/libtool.m4 m4/lt*.m4 #Gentoo 282268
+
+    AT_M4DIR=m4 autotools_src_prepare
+}
+
+src_install() {
+    default
+    find "${IMAGE}"/usr/share/gnome -type d -empty -delete
+}

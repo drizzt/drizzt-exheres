@@ -1,0 +1,20 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+
+MY_PNV=${PN}2-${PV}
+
+SUMMARY="a simple way to support the Session Initiation Protocol"
+
+HOMEPAGE="http://www.gnu.org/software/osip/"
+DOWNLOADS="mirror://gnu/osip/${MY_PNV}.tar.gz"
+
+LICENCES="LGPL-2"
+SLOT="0"
+PLATFORMS="~x86"
+MYOPTIONS=""
+
+DEPENDENCIES=""
+
+WORK="${WORKBASE}"/${MY_PNV}
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( --enable-mt )
