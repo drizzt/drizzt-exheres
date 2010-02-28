@@ -1,7 +1,7 @@
 # Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>
 # Distributed under the terms of the GNU General Public License v2
 
-require python
+require multilib python
 
 SUMMARY="automatic updater and package installer/remover for rpm systems"
 
@@ -10,7 +10,7 @@ DOWNLOADS="http://yum.baseurl.org/download/${PV:0:3}/${PNV}.tar.gz"
 
 LICENCES="GPL-2"
 SLOT="0"
-PLATFORMS="~x86"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS=""
 
 DEPENDENCIES="
@@ -25,6 +25,16 @@ DEPENDENCIES="
 "
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-fix-tests-with-C-locale.patch )
+
+src_prepare() {
+    default
+
+    # Naughty non-generated Makefiles hard-code "lib/python", making the `find`
+    # command in python_bytecompile fail for lib64/python.
+    edo sed \
+        -e "/^PYLIBDIR =/s:/lib/python:/$(get_libdir)/python:" \
+        -i {rpmUtils,yum}/Makefile
+}
 
 src_install() {
     default
