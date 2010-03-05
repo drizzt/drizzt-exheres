@@ -3,5 +3,5 @@
 
 require skype
 
-PLATFORMS="~x86"
+PLATFORMS="-* ~amd64 ~x86"
 SLOT="0"

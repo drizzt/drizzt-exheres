@@ -7,25 +7,53 @@ brought you KaZaA. Just like KaZaA, Skype uses P2P (peer-to-peer)
 technology to connect you to other users  not to share files this 
 time, but to talk and chat with your friends."
 HOMEPAGE="http://www.skype.com"
-DOWNLOADS="http://download.skype.com/linux/${PNV}.tar.bz2"
+DOWNLOADS="
+    !qt-static? ( http://download.skype.com/linux/${PNV}.tar.bz2 )
+    qt-static? ( http://download.skype.com/linux/${PN}_static-${PV}.tar.bz2 )
+"
 
 LICENCES="skype"
 # skype binary check its checksum
 RESTRICT="strip"
 
-MYOPTIONS=""
+MYOPTIONS="qt-static [[ description = [ Installs skype statically linked to Qt ] ]]
+    platform: amd64 x86"
 
+# FIXME use the dynamic version with qt support also for amd64
 DEPENDENCIES="
     run:
-        sys-sound/alsa-lib
-        x11-libs/libXScrnSaver
-        x11-libs/libXv
-        x11-libs/qt:4[dbus][X]
+        sys-sound/alsa-lib[multibuild_c:32]
+        x11-libs/libXScrnSaver[multibuild_c:32]
+        x11-libs/libXv[multibuild_c:32]
+        qt-static? (
+            dev-libs/glib[multibuild_c:32]
+            media-libs/freetype[multibuild_c:32]
+            media-libs/fontconfig[multibuild_c:32]
+            sys-libs/zlib[multibuild_c:32]
+            x11-libs/libICE[multibuild_c:32]
+            x11-libs/libSM[multibuild_c:32]
+            x11-libs/libXi[multibuild_c:32]
+            x11-libs/libXrandr[multibuild_c:32]
+            x11-libs/libXrender[multibuild_c:32]
+            x11-libs/libXext[multibuild_c:32]
+            x11-libs/libX11[multibuild_c:32]
+        )
+        !qt-static? ( x11-libs/qt:4[dbus][X] )
 "
 
 BUGS_TO="timothy@redaelli.eu"
 
 REMOTE_IDS="freshmeat:${PN}"
+
+pkg_pretend() {
+    if option platform:amd64 && ! option qt-static; then
+        die "You must enable qt-static option to install skype under amd64"
+    fi
+}
+
+pkg_setup() {
+    option qt-static && WORK="${WORKBASE}"/${PN}_static-${PV}
+}
 
 src_install() {
     exeinto /opt/${PN}
