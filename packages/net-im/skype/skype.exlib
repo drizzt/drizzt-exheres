@@ -17,6 +17,9 @@ MYOPTIONS=""
 
 DEPENDENCIES="
     run:
+        sys-sound/alsa-lib
+        x11-libs/libXScrnSaver
+        x11-libs/libXv
         x11-libs/qt:4[dbus][X]
 "
 
