@@ -5,7 +5,7 @@ require common-metadata
 
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="ipv6 nls"
+MYOPTIONS="ipv6"
 
 DEPENDENCIES="
     build:
@@ -20,6 +20,7 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --enable-file-upload
     --with-zlib
     --with-ssl
+    --enable-nls
     --enable-included-msgs
     --enable-nsl-fork
     --enable-read-eta
@@ -30,7 +31,6 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
 )
 DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
     ipv6
-    nls
 )
 
 DEFAULT_SRC_INSTALL_EXTRA_DOCS=(COPYHEADER PROBLEMS)
