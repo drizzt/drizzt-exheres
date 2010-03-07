@@ -1,0 +1,27 @@
+require googlecode [ suffix=tar.gz ]
+
+SUMMARY="WBFS manager for Linux using GTK+"
+
+LICENCES="GPL-2"
+SLOT="0"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build+run:
+        gnome-platform/libglade
+        dev-libs/glib:2
+"
+
+BUGS_TO="timothy@redaelli.eu"
+
+if ever at_least scm ; then
+    SCM_REPOSITORY="http://linux-wbfs-manager.googlecode.com/svn"
+    require scm-svn
+else
+    WORK="${WORKBASE}"/${PN}
+fi
+
+src_install() {
+    edo dobin wbfs_gtk
+    emagicdocs
+}

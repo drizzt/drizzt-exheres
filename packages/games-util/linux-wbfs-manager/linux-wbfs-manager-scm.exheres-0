@@ -1,0 +1,4 @@
+require linux-wbfs-manager
+
+PLATFORMS="~amd64"
+
