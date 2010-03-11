@@ -1,0 +1,34 @@
+Source: myself (Timothy Redaelli)
+Upstream: not applicable
+Reason: Some tests want network (internet) connection, it is no good for us
+
+--- miredo-1.2.2.orig/libteredo/test/Makefile.am	2008-02-16 15:55:14.000000000 +0100
++++ miredo-1.2.2/libteredo/test/Makefile.am	2010-03-11 14:23:00.000000000 +0100
+@@ -24,7 +24,6 @@
+ check_PROGRAMS = \
+ 	libteredo-list \
+ 	libteredo-stresslist \
+-	libteredo-test \
+ 	libteredo-clock \
+ 	libteredo-v4global \
+ 	libteredo-addrcmp \
+@@ -44,9 +43,6 @@
+ # libteredo-hmac
+ libteredo_hmac_SOURCES = hmac.c
+ 
+-# libteredo-test
+-libteredo_test_SOURCES = teredo.c
+-
+ # libteredo-clock
+ libteredo_clock_SOURCES = clock.c
+
+--- miredo-1.2.2.orig/src/Makefile.am	2009-07-06 17:56:14.000000000 +0200
++++ miredo-1.2.2/src/Makefile.am	2010-03-11 14:23:00.000000000 +0100
+@@ -60,7 +60,6 @@
+ miredo_privproc_LDADD = ../libteredo/libteredo.la $(LIBCAP)
+ if TEREDO_CLIENT
+ pkglib_PROGRAMS += miredo-privproc
+-TESTS += miredo-checkconf
+ endif
+ 
+ # miredo-server

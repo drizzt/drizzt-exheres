@@ -1,0 +1,11 @@
+# Copyright 2009, 2010 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+
+require miredo autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 1.10 ] ]
+
+SLOT="0"
+PLATFORMS="~amd64"
+
+AT_M4DIR="m4"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-disable-network-tests.patch )
