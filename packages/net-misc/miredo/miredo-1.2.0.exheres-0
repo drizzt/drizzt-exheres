@@ -29,7 +29,7 @@ src_install() {
     newinitd "${FILES}"/isatapd.init.d-0 isatapd
     newconfd "${FILES}"/isatapd.conf-0 isatapd
     emake DESTDIR="${IMAGE}" install
-    dodoc README NEWS ChangeLog AUTHORS THANKS TODO
+    emagicdocs
 
     rmdir "${IMAGE}"/var/run "${IMAGE}"/var || die "cannot remove empty dirs"
 }

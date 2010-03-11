@@ -24,7 +24,8 @@ src_install() {
     dobin src/{lrz,lsz}
     doman man/{lrz,lsz}.1
 
-    dodoc ABOUT-NLS AUTHORS COMPATABILITY ChangeLog NEWS README* THANKS TODO
+    emagicdocs
+    dodoc ABOUT-NLS COMPATABILITY
 
     local x
     for x in rb rx rz sb sx sz; do

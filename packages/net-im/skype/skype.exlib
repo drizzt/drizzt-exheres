@@ -31,8 +31,7 @@ src_install() {
     exeinto /opt/${PN}
     doexe skype
 
-    dodir /usr/bin
-    cat > "${IMAGE}"/usr/bin/skype <<'EOF'
+    herebin skype <<'EOF'
 #!/bin/sh
 /opt/skype/skype --resources=/opt/skype "$@"
 EOF
@@ -57,5 +56,5 @@ EOF
     insinto /usr/share/applications
     doins skype.desktop
 
-    dodoc README
+    emagicdocs
 }
