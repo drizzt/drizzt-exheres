@@ -13,7 +13,7 @@ DOWNLOADS="http://alioth.debian.org/frs/download.php/3015/${PNV}.tar.gz"
 
 LICENCES="GPL-2"
 SLOT="0"
-PLATFORMS="~x86"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS="debug"
 
 DEPENDENCIES="
@@ -22,7 +22,7 @@ DEPENDENCIES="
 
 src_prepare() {
     # Set LDFLAGS and fix expr (from my gentoo ebuild)
-    sed -i -e 's/expr/& --/' -e "s/^LFLAGS=$/&${LDFLAGS}/" configure || die "cannot set LDFLAGS and fix expr"
+    edo sed -i -e 's/expr/& --/' -e "s/^LFLAGS=$/&${LDFLAGS}/" configure
 }
 
 src_configure() {
@@ -31,11 +31,11 @@ src_configure() {
         --prefix=/usr \
         --etcdir=/etc \
         --i18n=1 \
-        $(option debug && echo --debug=1) \
-        || die "./configure has failed"
+        $(option debug && echo --debug=1)
 }
 
 src_install() {
     default
-    dodoc API CHANGES CREDITS README axelrc.example
+    emagicdocs
+    dodoc axelrc.example
 }
