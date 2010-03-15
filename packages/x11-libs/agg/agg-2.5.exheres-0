@@ -1,0 +1,40 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+
+require autotools [ supported_autoconf=[ 2.5 ] supported_automake=[ 1.11 1.10 ] ]
+
+SUMMARY="A High Quality Rendering Engine for C++"
+
+HOMEPAGE="http://antigrain.com/"
+DOWNLOADS="http://antigrain.com/${PNV}.tar.gz"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="truetype X"
+
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+    build+run:
+        media-libs/SDL[X?]
+        X? ( x11-libs/libX11[xcb] )
+        truetype? ( media-libs/freetype:2 )
+"
+
+BUGS_TO="timothy@redaelli.eu"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=(
+    --enable-ctrl
+    --enable-gpc
+    --enable-sdltest
+    --disable-examples
+)
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( "X x" )
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( "truetype freetype" )
+
+src_prepare() {
+    edo sed -i 's:-Wl,-rpath,${exec_prefix}/lib ::' "${WORK}"/libagg.pc.in
+    edo sed -i 's:-L@x_libraries@::' "${WORK}"/src/platform/X11/Makefile.am
+    autotools_src_prepare
+}
