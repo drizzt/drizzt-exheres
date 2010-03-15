@@ -1,7 +1,7 @@
 # Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>
 # Distributed under the terms of the GNU General Public License v2
 
-require multilib python
+require bash-completion multilib python
 
 SUMMARY="automatic updater and package installer/remover for rpm systems"
 
@@ -39,6 +39,10 @@ src_prepare() {
 src_install() {
     default
     edo rm -r "${IMAGE}"/etc/rc.d
+
+    dobashcompletion "${IMAGE}"/etc/bash_completion.d/yum.bash yum
+    edo rm "${IMAGE}"/etc/bash_completion.d/yum.bash
+
     edo find "${IMAGE}" -name '*.py[co]' -delete
     edo find "${IMAGE}" -type d -empty -delete
     python_bytecompile
