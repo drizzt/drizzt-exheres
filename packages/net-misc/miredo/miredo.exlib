@@ -18,13 +18,11 @@ REMOTE_IDS="freshmeat:${PN}"
 
 UPSTREAM_CHANGELOG="http://git.remlab.net/cgi-bin/gitweb.cgi?p=miredo.git;a=blob_plain;f=NEWS;hb=HEAD"
 
-MYOPTIONS="
-    nojudy [[ description = [ Do not use Judy for dynamic arrays management (NOT RECOMMENDED) ] ]]
-"
+MYOPTIONS=""
 
 DEPENDENCIES="
     build+run:
-        !nojudy? ( dev-libs/judy )
+        dev-libs/judy
     run:
         sys-apps/iproute2
     post:
@@ -36,8 +34,6 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
     --enable-miredo-user
     --localstatedir=/var
 )
-
-DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( "!nojudy Judy" )
 
 src_install() {
     newinitd "${FILES}"/miredo.init.d-0 miredo
