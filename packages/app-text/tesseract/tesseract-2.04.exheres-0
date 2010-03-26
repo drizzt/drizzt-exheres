@@ -12,6 +12,7 @@ require tesseract [ lang_files=[ \
     "pt ${PN}-2.01.por" \
     "vi ${PN}-2.01.vie" ] ]
 
-PLATFORMS="~x86"
+PLATFORMS="~amd64 ~x86"
 
 DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-gcc44.patch )
+
