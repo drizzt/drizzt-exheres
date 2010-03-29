@@ -81,6 +81,7 @@ MYOPTIONS="X a52 aac aalib blinkenlights cddb cdparanoia debug dga dirac dts
     fbdev         [[ description = [ Generic Linux framebuffer device support ] ]]
     fribidi       [[ description = [ Use the FriBiDi libs for bidirectional unicode ] ]]
     lzo           [[ description = [ Enable support for the LZO compression library ] ]]
+    matrixview    [[ description = [ Enable support for a Matrix OpenGL based output ] requires = opengl ]]
     md5sum        [[ description = [ Build the MD5SUM video output ] ]]
     mga           [[ description = [ Enable support for the Matrox framebuffer (mga_vid) ] ]]
     mp2           [[ description = [ Enable MPEG layer 2 encoding through twolame ] ]]
@@ -152,7 +153,7 @@ DEPENDENCIES="
             media-libs/fontconfig
         )
         vdpau? ( x11-libs/libvdpau )
-        vesa? ( x11-server/xorg-server[video_drivers:vesa] )
+        vesa? ( x11-drivers/xf86-video-vesa )
         vorbis? ( media-libs/libvorbis )
         xinerama? (
             x11-proto/xineramaproto
@@ -181,6 +182,7 @@ OPTION_DISABLES=(
     jack
     joystick
     ladspa
+    matrixview
     md5sum
     mga
     mng
@@ -199,7 +201,6 @@ OPTION_DISABLES=(
     xshape
     xv
     xvid
-    xvmc
     "X x11"
     "X xf86keysym"
     "X vm"
@@ -278,6 +279,7 @@ src_configure() {
     # These must be enabled rather than not disabled
     option gtk && myconf+=( --enable-gui )
     option debug && myconf+=( --enable-debug )
+    option xvmc && myconf+=( --enable-xvmc )
 
     if option !X || option !mga; then
         myconf+=( --disable-xmga )
