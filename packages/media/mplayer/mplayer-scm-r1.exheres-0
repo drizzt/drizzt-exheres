@@ -81,6 +81,7 @@ MYOPTIONS="X a52 aac aalib blinkenlights cddb cdparanoia debug dga dirac dts
     fbdev         [[ description = [ Generic Linux framebuffer device support ] ]]
     fribidi       [[ description = [ Use the FriBiDi libs for bidirectional unicode ] ]]
     lzo           [[ description = [ Enable support for the LZO compression library ] ]]
+    matrixview    [[ description = [ Enable support for a Matrix OpenGL based output ] requires = opengl ]]
     md5sum        [[ description = [ Build the MD5SUM video output ] ]]
     mga           [[ description = [ Enable support for the Matrox framebuffer (mga_vid) ] ]]
     mp2           [[ description = [ Enable MPEG layer 2 encoding through twolame ] ]]
@@ -181,6 +182,7 @@ OPTION_DISABLES=(
     jack
     joystick
     ladspa
+    matrixview
     md5sum
     mga
     mng
