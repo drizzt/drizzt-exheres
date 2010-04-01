@@ -1,0 +1,26 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>                                                                                                                             
+# Distributed under the terms of the GNU General Public License v2
+
+require distutils
+
+MY_PNV=Louie-${PV}
+
+SUMMARY="Signal dispatching mechanism for Python"
+
+HOMEPAGE="http://pypi.python.org/pypi/Louie/"
+DOWNLOADS="http://cheeseshop.python.org/packages/source/L/Louie/${MY_PNV}.tar.gz"
+
+LICENCES="BSD"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    build:
+        dev-python/setuptools
+"
+
+BUGS_TO="timothy@redaelli.eu"
+
+WORK="${WORKBASE}"/${MY_PNV}
+
