@@ -12,7 +12,7 @@
 #    nemesi libdvdnav libdvdread enca vstream (TiVo)
 #  * Missing codecs: cdio win32dll/win32codecs real (realplayer/win32codecs)
 #    libnut libdv amr_nb amr_wb
-#  * Missing video output drivers: svgalib libcaca libggi libggiwmh dxr2/3
+#  * Missing video output drivers: svgalib libggi libggiwmh dxr2/3
 #    directfb xvr100 neon (arm)
 #  * Missing audio output drivers: esd openal nas sgiaudio sunaudio
 
@@ -75,6 +75,7 @@ MYOPTIONS="X a52 aac aalib blinkenlights cddb cdparanoia debug dga dirac dts
     ( dga opengl vidix xshape xv xvmc xinerama ) [[ requires = X ]]
 
     blinkenlights [[ description = [ Build the Blinkenlights video output. See http://blinkenlights.net ] ]]
+    caca          [[ description = [ Enable support for colored ASCII-art graphics using libcaca ] ]]
     custom-cflags [[ description = [ Build with custom cflags (unsupported) ] ]]
     debug         [[ description = [ Build with debug information ] ]]
     dirac         [[ description = [ Enable support for the Dirac video codec ] ]]
@@ -124,6 +125,7 @@ DEPENDENCIES="
             media-libs/faad2
             media-libs/faac
         )
+        caca? ( media-libs/libcaca )
         cdparanoia? ( media/cdparanoia )
         dirac? ( media-libs/dirac )
         dga? ( x11-proto/xf86dgaproto )
@@ -174,6 +176,7 @@ DEPENDENCIES="
 "
 
 OPTION_DISABLES=(
+    caca
     cddb
     cdparanoia
     fbdev
