@@ -1,0 +1,31 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>                                                                                                                             
+# Distributed under the terms of the GNU General Public License v2
+
+require distutils
+
+MY_PNV=Coherence-${PV}
+
+SUMMARY="A framework written in Python for DLNA/UPnP components"
+
+HOMEPAGE="https://coherence.beebits.net/"
+DOWNLOADS="http://coherence.beebits.net/download/${MY_PNV}.tar.gz"
+
+LICENCES="MIT"
+SLOT="0"
+MYOPTIONS="
+    flickr    [[ description =  [ Use dev-python/mechanize for the account authentication in the Flickr MediaServer backend ] ]]
+    gstreamer"
+
+DEPENDENCIES="
+    build+run:
+        dev-python/setuptools
+        dev-python/louie
+        gstreamer? ( dev-python/gst-python )
+        flickr? ( dev-python/mechanize )
+        net-twisted/twisted-web
+"
+
+BUGS_TO="timothy@redaelli.eu"
+
+WORK="${WORKBASE}"/${MY_PNV}
+
