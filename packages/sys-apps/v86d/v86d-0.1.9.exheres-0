@@ -1,0 +1,52 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+
+require flag-o-matic
+
+SUMMARY="A daemon to run x86 code in an emulated environment."
+
+HOMEPAGE="http://dev.gentoo.org/~spock/projects/uvesafb/"
+DOWNLOADS="http://dev.gentoo.org/~spock/projects/uvesafb/archive/${PNV}.tar.bz2"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="debug static x86emu
+    debug   [[ description = [ Enable extra output and compile a test program. ] ]]
+    x86emu  [[ description = [ Use a fully software-emulated environment (x86emu) ] ]]
+    platform: amd64"
+
+DEPENDENCIES=""
+
+BUGS_TO="timothy@redaelli.eu"
+
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-prot_write.patch )
+
+pkg_pretend() {
+    if option platform:amd64 && ! option x86emu; then
+        die "You must enable x86emu to compile ${PN} under amd64"
+    fi
+}
+
+src_configure() {
+    option static && append-ldflags -static
+    # Cannot use econf here
+    edo ./configure $(option_with debug) $(option_with x86emu)
+}
+
+src_install() {
+    default
+    if option static; then
+        insinto /usr/share/${PN}
+        doins misc/initramfs
+    fi
+}
+
+pkg_postinst() {
+    if option static; then
+        elog "If you wish to place ${PN} into an initramfs image, you might want to use"
+        elog "'/usr/share/${PN}/initramfs' in your kernel's CONFIG_INITRAMFS_SOURCE."
+    else
+        elog "If you wish to place ${PN} into an initramfs image, you must recompile it with static option."
+    fi
+}
