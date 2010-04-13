@@ -1,0 +1,28 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>
+# Distributed under the terms of the GNU General Public License v2
+
+SUMMARY="parallel bzip2 (de)compressor using libbz2"
+
+HOMEPAGE="http://compression.ca/pbzip2/"
+DOWNLOADS="http://compression.ca/${PN}/${PNV}.tar.gz"
+
+LICENCES="BSD"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS=""
+
+DEPENDENCIES="app-arch/bzip2"
+
+BUGS_TO="timothy@redaelli.eu"
+
+src_prepare() {
+    edo sed -i -e '/^CFLAGS = /d' -e 's/^LDFLAGS =/LDFLAGS +=/' -e 's/CFLAGS/CXXFLAGS/g' -e 's/\$(CC)/$(CXX)/' "${WORK}"/Makefile
+}
+
+src_install() {
+    dobin pbzip2
+    dosym pbzip2 /usr/bin/pbunzip2
+    doman pbzip2.1
+    emagicdocs
+}
+
