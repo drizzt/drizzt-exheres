@@ -16,3 +16,8 @@ DEPENDENCIES=""
 BUGS_TO="timothy@redaelli.eu"
 
 DEFAULT_SRC_INSTALL_PARAMS=( prefix=/usr )
+
+src_prepare() {
+    edo sed -i 's:\. version\.sh:. ./version.sh:' reversion.sh
+}
+
