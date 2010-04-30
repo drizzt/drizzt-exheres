@@ -1,0 +1,39 @@
+# Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>                                                                                                                                                           
+# Distributed under the terms of the GNU General Public License v2
+
+require scons
+
+SUMMARY="A simple converter to create Ogg Theora files."
+
+HOMEPAGE="http://www.v2v.cc/~j/ffmpeg2theora/"
+DOWNLOADS="${HOMEPAGE}/downloads/${PNV}.tar.bz2"
+
+LICENCES="GPL-3"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="kate"
+
+DEPENDENCIES="
+    build:
+        dev-util/pkg-config
+    build+run:
+        media/ffmpeg
+        kate? ( media-libs/libkate )
+        media-libs/libogg
+        media-libs/libtheora
+        media-libs/libvorbis
+"
+
+BUGS_TO="timothy@redaelli.eu"
+
+SCONS_SRC_INSTALL_PARAMS=(
+    destdir="${IMAGE}"
+    prefix=/usr
+    mandir=PREFIX/share/man
+)
+
+src_configure() {
+    SCONS_SRC_CONFIGURE_PARAMS=( libkate=$(option kate && echo 1 || echo 0) )
+    scons_src_configure
+}
+
