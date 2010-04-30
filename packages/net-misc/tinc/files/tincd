@@ -62,3 +62,9 @@ reload() {
 		fi
 	done
 }
+
+restart() {
+	svc_stop
+	sleep 2
+	svc_start  
+}
