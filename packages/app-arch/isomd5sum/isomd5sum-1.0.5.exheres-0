@@ -15,7 +15,7 @@ DOWNLOADS="https://fedorahosted.org/releases/i/s/${PN}/${PNV}.tar.bz2"
 
 LICENCES="GPL-2"
 SLOT="0"
-PLATFORMS="~x86"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS="python"
 
 DEPENDENCIES="
@@ -26,6 +26,7 @@ DEPENDENCIES="
 
 src_compile() {
     append-lfs-flags
+    append-flags -fPIC
     emake -j1 CFLAGS="$CPPFLAGS $CFLAGS" implantisomd5 checkisomd5
     if option python; then
         append-cppflags "-I/usr/include/python$(python_get_abi)"
