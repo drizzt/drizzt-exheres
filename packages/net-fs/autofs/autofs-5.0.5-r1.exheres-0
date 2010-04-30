@@ -28,6 +28,17 @@ PATCHES_LIST=(
     ${PNV}-dont-fail-mount-on-access-fail.patch
     ${PNV}-fix-rpc-large-export-list.patch
     ${PNV}-fix-memory-leak-on-reload.patch
+    ${PNV}-update-kernel-patches-2.6.18-and-2.6.19.patch
+    ${PNV}-dont-connect-at-ldap-lookup-module-init.patch
+    ${PNV}-fix-random-selection-option.patch
+    ${PNV}-fix-disable-timeout.patch
+    ${PNV}-fix-strdup-return-value-check.patch
+    ${PNV}-fix-reconnect-get-base-dn.patch
+    ${PNV}-add-sasl-mutex-callbacks.patch
+    ${PNV}-fix-get-qdn-fail.patch
+    ${PNV}-fix-ampersand-escape-in-auto-smb.patch
+    ${PNV}-add-locality-as-valid-ldap-master-map-attribute.patch
+    ${PNV}-add-locality-as-valid-ldap-master-map-attribute-fix.patch
 )
 
 DOWNLOADS="${DOWNLOADS_BASE}/${PNV}.tar.bz2"

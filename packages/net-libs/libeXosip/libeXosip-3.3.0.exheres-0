@@ -1,6 +1,8 @@
 # Copyright 2010 Timothy Redaelli <timothy@redaelli.eu>
 # Distributed under the terms of the GNU General Public License v2
 
+MY_PNV=${PN}2-${PV}
+
 SUMMARY="library that hides the complexity of using the SIP protocol for multimedia session establishement"
 
 HOMEPAGE="http://www.antisip.com/as/toolkit.php"
@@ -8,7 +10,7 @@ DOWNLOADS="http://download.savannah.nongnu.org/releases/exosip/${MY_PNV}.tar.gz"
 
 LICENCES="GPL-2"
 SLOT="0"
-PLATFORMS="~x86"
+PLATFORMS="~amd64 ~x86"
 MYOPTIONS=""
 
 DEPENDENCIES="net-libs/libosip"
@@ -16,3 +18,4 @@ DEPENDENCIES="net-libs/libosip"
 WORK="${WORKBASE}"/${MY_PNV}
 
 DEFAULT_SRC_CONFIGURE_PARAMS=( --disable-joshua )   # Sorry Dr. Falken
+
