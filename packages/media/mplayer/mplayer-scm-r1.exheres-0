@@ -268,8 +268,8 @@ src_configure() {
         --enable-sortsub
     )
 
-    for o in enca esd faac-lavc faad-internal gtk1 ivtv liba52-internal \
-               libopencore_amrnb libopencore_amrwb libcdio libnut lirc lircc live \
+    for o in enca esd faac-lavc faad-internal gtk1 ivtv libopencore_amrnb \
+               libopencore_amrwb libcdio libnut lirc lircc live \
                mp3lame-lavc nas nemesi openal qtx radio-v4l2  sgiaudio sunaudio \
                toolame tremor tv-v4l1 vstream win32dll x264-lavc xmms xvid-lavc; do
         myconf+=( --disable-${o} )
