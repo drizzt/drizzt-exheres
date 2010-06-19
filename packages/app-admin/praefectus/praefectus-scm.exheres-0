@@ -1,0 +1,24 @@
+# Copyright (c) 2010 Aleksandar Petrinic <petrinic@gmail.com>
+# Distributed under the terms of the GNU General Public License v2
+
+SCM_REPOSITORY="git://gitorious.org/praefectus/praefectus.git"
+
+require scm-git qmake4
+
+SUMMARY="The GUI client for paludis. Written in qt4."
+DESCRIPTION="Attempt to make a GUI frontend for paludis. Written in qt4.
+Freely inspirated by kuroo and porthole."
+HOMEPAGE="http://gitorious.org/praefectus"
+
+LICENCES="GPL-2"
+SLOT="0"
+PLATFORMS="~amd64 ~x86"
+MYOPTIONS=""
+
+DEPENDENCIES="
+    sys-apps/paludis[>=0.46.0]
+    x11-libs/qt[>=4.6.0][X]
+"
+
+BUGS_TO="petrinic@gmail.com"
+

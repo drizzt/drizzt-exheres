@@ -1,0 +1,22 @@
+
+require sourceforge [ suffix=tar.gz ]
+
+SUMMARY="tool to measure IP bandwidth using UDP or TCP"
+
+LICENCES="as-is"
+SLOT="0"
+PLATFORMS="~amd64"
+MYOPTIONS="debug ipv6 threads"
+
+DEPENDENCIES=""
+
+BUGS_TO="timothy@redaelli.eu"
+
+DEFAULT_SRC_CONFIGURE_PARAMS=( )
+DEFAULT_SRC_CONFIGURE_OPTION_WITHS=( )
+DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=(
+    "debug debuginfo"
+    ipv6
+    threads
+)
+
