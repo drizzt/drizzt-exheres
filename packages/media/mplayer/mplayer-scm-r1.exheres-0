@@ -5,6 +5,7 @@
 #  Copyright 1999-2008 Gentoo Foundation
 
 # Outstanding issues - feel free to fix
+#  * No libgsm or librtmp support since we are missing required packages
 #  * Use suboptions for video drivers
 #  * S3 VDPAU support. We need someone with a card to test and something to
 #    depend on
@@ -61,14 +62,15 @@ LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~ppc64 ~x86"
 MYOPTIONS="X a52 aac aalib blinkenlights cddb cdparanoia debug dga dirac dts
-    dvd fbdev fribidi ftp gtk h264 jack joystick ladspa lzo md5sum mga mng mp2
-    mp3 mt musepack opengl oss pnm pulseaudio pvr s3fb samba schroedinger sdl speex
+    dvd fbdev fribidi ftp gtk h264 jack joystick jpeg2000 ladspa lzo matrixview md5sum mga mng mp2
+    mp3 mpeg2 mt musepack opengl oss pnm pulseaudio pvr s3fb samba schroedinger sdl speex
     srt tdfxfb tdfxvid tga theora truetype tv tv-v4l vdpau vesa vidix
-    vorbis xinerama xshape xv xvid xvmc
+    vorbis vp8 xinerama xshape xv xvid xvmc
     ( platform: x86 )
 
     cddb [[ requires = cdparanoia ]]
     gtk [[ requires = [ truetype xshape ] ]]
+    matrixview [[ requires = opengl ]]
     pvr [[ requires = tv-v4l ]]
     srt [[ requires = truetype ]]
     tv-v4l [[ requires = tv ]]
@@ -81,12 +83,14 @@ MYOPTIONS="X a52 aac aalib blinkenlights cddb cdparanoia debug dga dirac dts
     dirac         [[ description = [ Enable support for the Dirac video codec ] ]]
     fbdev         [[ description = [ Generic Linux framebuffer device support ] ]]
     fribidi       [[ description = [ Use the FriBiDi libs for bidirectional unicode ] ]]
+    jpeg2000      [[ description = [ JPEG200 encode/decode support vie OpenJPEG ] ]]
     lzo           [[ description = [ Enable support for the LZO compression library ] ]]
-    matrixview    [[ description = [ Enable support for a Matrix OpenGL based output ] requires = opengl ]]
+    matrixview    [[ description = [ Enable support for a Matrix OpenGL based output ] ]]
     md5sum        [[ description = [ Build the MD5SUM video output ] ]]
     mga           [[ description = [ Enable support for the Matrox framebuffer (mga_vid) ] ]]
-    mp2           [[ description = [ Enable MPEG layer 2 encoding through twolame ] ]]
+    mp2           [[ description = [ Enable MPEG Audio Layer 2 encoding through twolame ] ]]
     mp3           [[ description = [ Support for mp3 encoding with lame, and mp3 decoding with mad ] ]]
+    mpeg2         [[ description = [ Enable MPEG Layer 2 video decoding ] ]]
     mt            [[ description = [ Compile with ffmpeg-mt (experimental) ] ]]
     oss           [[ description = [ Adds support for OSSv4 ] ]]
     pnm           [[ description = [ Build the PNM (Portable Anymap) video output ] ]]
@@ -100,6 +104,7 @@ MYOPTIONS="X a52 aac aalib blinkenlights cddb cdparanoia debug dga dirac dts
     tv            [[ description = [ Support for the TV interface ] ]]
     tv-v4l        [[ description = [ Support for the Video4Linux2 TV interface ] ]]
     vdpau         [[ description = [ Enable the Video Display and Presentation API for Unix which offloads parts of video decoding to your GPU ] ]]
+    vp8           [[ description = [ Enable support for the VP8 video compression format ] ]]
     vesa          [[ description = [ Build the Vesa video output ] ]]
     vidix         [[ description = [ Enable VIDIX (Video Interface for *nix) support ] ]]
     xshape        [[ description = [ XShape support for themes ] ]]
@@ -132,8 +137,9 @@ DEPENDENCIES="
         dts? ( media-libs/libdca )
         fribidi? ( dev-libs/fribidi )
         gtk? ( x11-libs/gtk+ )
-        h264? ( media-libs/x264[>=20091122] )
+        h264? ( media-libs/x264[>=20100610] )
         jack? ( media-sound/jack-audio-connection-kit )
+        jpeg2000? ( media-libs/OpenJPEG )
         ladspa? ( media-libs/ladspa-sdk )
         lzo? ( app-arch/lzo )
         mng? ( media-libs/libmng )
@@ -142,6 +148,7 @@ DEPENDENCIES="
             media-libs/libmad
             media-sound/lame
         )
+        mpeg2? ( media-libs/libmpeg2 )
         musepack? ( media-libs/libmpcdec )
         opengl? ( x11-dri/mesa )
         pulseaudio? ( media-sound/pulseaudio )
@@ -151,12 +158,13 @@ DEPENDENCIES="
         speex? ( media-libs/speex )
         theora? ( media-libs/libtheora )
         truetype? (
-            media-libs/freetype
+            media-libs/freetype[>=2.2.1]
             media-libs/fontconfig
         )
         vdpau? ( x11-libs/libvdpau )
         vesa? ( x11-drivers/xf86-video-vesa )
         vorbis? ( media-libs/libvorbis )
+        vp8? ( media-libs/libvpx )
         xinerama? (
             x11-proto/xineramaproto
             x11-libs/libXinerama
@@ -221,21 +229,24 @@ OPTION_DISABLES=(
     "dvd dvdread-internal"
     "dvd libdvdcss-internal"
     "h264 x264"
+    "jpeg2000 libopenjpeg"
     "lzo liblzo"
     "mp2 twolame"
     "mp3 mad"
     "mp3 mp3lib"
     "mp3 mp3lame"
+    "mpeg2 libmpeg2"
     "opengl gl"
     "oss ossaudio"
     "pulseaudio pulse"
     "samba smb"
     "schroedinger libschroedinger-lavc"
-    "srt ass"
+    "srt ass-internal"
     "truetype freetype"
     "truetype fontconfig"
     "tv-v4l tv-v4l2"
     "vorbis libvorbis"
+    "vp8 libvpx-lavc"
 )
 
 option_disable() {
@@ -269,8 +280,8 @@ src_configure() {
     )
 
     for o in enca esd faac-lavc faad-internal gtk1 ivtv libopencore_amrnb \
-               libopencore_amrwb libcdio libnut lirc lircc live \
-               mp3lame-lavc nas nemesi openal qtx radio-v4l2  sgiaudio sunaudio \
+               libopencore_amrwb libcdio libmpeg2-internal libnut librtmp lirc lircc live \
+               mp3lame-lavc mpg123 nas nemesi openal qtx radio-v4l2 sgiaudio sunaudio \
                toolame tremor tv-v4l1 vstream win32dll x264-lavc xmms xvid-lavc; do
         myconf+=( --disable-${o} )
     done
