@@ -18,7 +18,7 @@
 
 SCM_REPOSITORY=svn://svn.mplayerhq.hu/mplayer
 SCM_TYPE=svn
-SCM_SVN_EXTERNALS="libdvdread4:libdvdread libdvdnav:libdvdnav libavutil: libavcodec: libavformat: libpostproc:"
+SCM_SVN_EXTERNALS="libdvdread4:libdvdread libdvdnav:libdvdnav libavutil: libavcodec: libavformat: libpostproc: libavcore:"
 
 SCM_libdvdread_REPOSITORY=svn://svn.mplayerhq.hu/dvdnav/trunk/libdvdread/src
 SCM_libdvdread_SVN_RAW_URI=1
@@ -244,7 +244,7 @@ option_disable() {
 
 src_prepare() {
     edo rm -rf libavcodec libavformat libavutil libpostproc
-    edo mv ../ffmpeg$(option mt && echo -mt)/{libavcodec,libavformat,libavutil,libpostproc} .
+    edo mv ../ffmpeg$(option mt && echo -mt)/{libavcodec,libavcore,libavformat,libavutil,libpostproc} .
 
     default
     # Don't run install -s
@@ -262,7 +262,7 @@ src_configure() {
         --enable-iconv
         --enable-jpeg
         --enable-largefiles
-        --enable-network
+        --enable-networking
         --enable-png
         --enable-rtc
         --enable-sortsub
