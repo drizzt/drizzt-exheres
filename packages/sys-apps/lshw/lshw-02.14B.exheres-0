@@ -19,7 +19,7 @@ BUGS_TO="timothy@redaelli.eu"
 
 WORK="${WORKBASE}"/${MY_PNV}
 
-DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-build.patch )
+DEFAULT_SRC_PREPARE_PATCHES=( "${FILES}"/${PNV}-{build,gcc-4.5}.patch )
 
 src_compile() {
     default
