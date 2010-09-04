@@ -5,3 +5,4 @@ require skype
 
 PLATFORMS="-* ~amd64 ~x86"
 SLOT="0"
+

@@ -19,7 +19,6 @@ RESTRICT="strip"
 MYOPTIONS="qt-static [[ description = [ Installs skype statically linked to Qt ] ]]
     platform: amd64 x86"
 
-# FIXME use the dynamic version with qt support also for amd64
 DEPENDENCIES="
     run:
         sys-sound/alsa-lib[multibuild_c:32]
@@ -38,18 +37,12 @@ DEPENDENCIES="
             x11-libs/libXext[multibuild_c:32]
             x11-libs/libX11[multibuild_c:32]
         )
-        !qt-static? ( x11-libs/qt:4[dbus][X] )
+        !qt-static? ( x11-libs/qt:4[dbus][X][multibuild_c:32] )
 "
 
 BUGS_TO="timothy@redaelli.eu"
 
 REMOTE_IDS="freshmeat:${PN}"
-
-pkg_pretend() {
-    if option platform:amd64 && ! option qt-static; then
-        die "You must enable qt-static option to install skype under amd64"
-    fi
-}
 
 pkg_setup() {
     option qt-static && WORK="${WORKBASE}"/${PN}_static-${PV}
