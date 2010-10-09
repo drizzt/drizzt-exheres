@@ -8,7 +8,7 @@ DOWNLOADS="http://www.tinc-vpn.org/packages/${PNV}.tar.gz"
 
 LICENCES="GPL-2"
 SLOT="0"
-MYOPTIONS="lzo [[ description = [ Enable support for the LZO compression library ] ]]"
+MYOPTIONS="baselayout lzo [[ description = [ Enable support for the LZO compression library ] ]]"
 
 DEPENDENCIES="lzo? ( app-arch/lzo:2 )
               dev-libs/openssl
@@ -19,6 +19,9 @@ DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=( lzo )
 
 src_install() {
     default
-    doinitd "${FILES}"/tincd
-    doconfd "${FILES}"/tinc.networks
+
+    if option baselayout ; then
+        doinitd "${FILES}"/tincd
+        doconfd "${FILES}"/tinc.networks
+    fi
 }
