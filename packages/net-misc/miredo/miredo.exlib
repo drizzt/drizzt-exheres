@@ -18,7 +18,7 @@ REMOTE_IDS="freshmeat:${PN}"
 
 UPSTREAM_CHANGELOG="http://git.remlab.net/cgi-bin/gitweb.cgi?p=miredo.git;a=blob_plain;f=NEWS;hb=HEAD"
 
-MYOPTIONS=""
+MYOPTIONS="baselayout"
 
 DEPENDENCIES="
     build+run:
@@ -36,12 +36,14 @@ DEFAULT_SRC_CONFIGURE_PARAMS=(
 )
 
 src_install() {
-    newinitd "${FILES}"/miredo.init.d-0 miredo
-    newconfd "${FILES}"/miredo.conf-0 miredo
-    newinitd "${FILES}"/miredo-server.init.d-0 miredo-server
-    newconfd "${FILES}"/miredo-server.conf-0 miredo-server
-    newinitd "${FILES}"/isatapd.init.d-0 isatapd
-    newconfd "${FILES}"/isatapd.conf-0 isatapd
+    if option baselayout ; then
+        newinitd "${FILES}"/miredo.init.d-0 miredo
+        newconfd "${FILES}"/miredo.conf-0 miredo
+        newinitd "${FILES}"/miredo-server.init.d-0 miredo-server
+        newconfd "${FILES}"/miredo-server.conf-0 miredo-server
+        newinitd "${FILES}"/isatapd.init.d-0 isatapd
+        newconfd "${FILES}"/isatapd.conf-0 isatapd
+    fi
 
     default
 
