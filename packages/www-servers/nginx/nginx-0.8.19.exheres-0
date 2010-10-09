@@ -7,7 +7,7 @@ require common-metadata
 
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS="addition debug fastcgi flv imap pcre perl random-index sub zlib
+MYOPTIONS="addition baselayout debug fastcgi flv imap pcre perl random-index sub zlib
     status [[ description = [ Enables stub_status module ] ]]
     webdav [[ description = [ Enables webdav support ] ]]
 "
@@ -67,7 +67,7 @@ src_install() {
     keepdir /var/log/${PN} /var/tmp/${PN}/{client,proxy,fastcgi}
     
     dosbin objs/nginx
-    newinitd "${FILES}"/nginx.initd nginx
+    option baselayout && newinitd "${FILES}"/nginx.initd nginx
 
     insinto /etc/nginx
     doins "${FILES}"/nginx.conf
