@@ -50,7 +50,7 @@ done
 LICENCES="GPL-2"
 SLOT="0"
 PLATFORMS="~amd64 ~x86"
-MYOPTIONS=""
+MYOPTIONS="baselayout"
 
 DEPENDENCIES="
     build:
@@ -79,7 +79,7 @@ src_prepare() {
 
 src_install() {
     default
-    newinitd "${FILES}"/autofs$(ever major).initd autofs
+    option baselayout && newinitd "${FILES}"/autofs$(ever major).initd autofs
     keepdir /var/run/autofs
 }
 
