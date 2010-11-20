@@ -19,14 +19,14 @@
 
 SCM_REPOSITORY=svn://svn.mplayerhq.hu/mplayer
 SCM_TYPE=svn
-SCM_SVN_EXTERNALS="libdvdread4:libdvdread libdvdnav:libdvdnav libavutil: libavcodec: libavformat: libpostproc: libavcore:"
+SCM_SVN_EXTERNALS="libdvdread4:libdvdread libdvdnav:libdvdnav ffmpeg:"
 
 SCM_libdvdread_REPOSITORY=svn://svn.mplayerhq.hu/dvdnav/trunk/libdvdread/src
 SCM_libdvdread_SVN_RAW_URI=1
 SCM_libdvdnav_REPOSITORY=svn://svn.mplayerhq.hu/dvdnav/trunk/libdvdnav/src
 SCM_libdvdnav_SVN_RAW_URI=1
 
-SCM_SECONDARY_REPOSITORIES="libdvdread libdvdnav ffmpeg ffmpeg_mt"
+SCM_SECONDARY_REPOSITORIES="libdvdread libdvdnav ffmpeg ffmpeg_mt libswscale"
 
 SCM_ffmpeg_REPOSITORY=git://git.ffmpeg.org/ffmpeg
 SCM_ffmpeg_UNPACK_TO="${WORKBASE}"/ffmpeg/
@@ -34,6 +34,9 @@ SCM_ffmpeg_TYPE=git
 SCM_ffmpeg_mt_REPOSITORY=git://git.gitorious.org/ffmpeg/ffmpeg-mt
 SCM_ffmpeg_mt_UNPACK_TO="${WORKBASE}"/ffmpeg-mt/
 SCM_ffmpeg_mt_TYPE=git
+SCM_libswscale_REPOSITORY=git://git.ffmpeg.org/libswscale
+SCM_libswscale_UNPACK_TO="${WORKBASE}"/libswscale
+SCM_libswscale_TYPE=git
 
 require multilib scm
 
@@ -254,8 +257,8 @@ option_disable() {
 }
 
 src_prepare() {
-    edo rm -rf libavcodec libavformat libavutil libpostproc
-    edo mv ../ffmpeg$(option mt && echo -mt)/{libavcodec,libavcore,libavformat,libavutil,libpostproc} .
+    edo mv ../ffmpeg$(option mt && echo -mt)/ ffmpeg
+    edo mv ../libswscale ffmpeg/
 
     default
     # Don't run install -s
